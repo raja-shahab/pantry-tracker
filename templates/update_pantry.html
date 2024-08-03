@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block start %}
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  .text{
+    color: green;
+    font-weight: bold;
+  }
+</style>
+
+<div class="container mt-5">
+
+  <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2 class="text  text-center"> Cooking Book </h2>
+
+    <h>Update Pantry</h>
+    <hr>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Pantry name</label>
+      <input name="name" value="{{queryset.inventory_name}}" type="text" class="form-control" required>
+    </div>
+  <div class="form-group">
+      <label for="exampleInputEmail1">Pantry Count</label>
+      <input name="count" value="{{ prev_count }}" type="text" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Pantry description</label>
+      <textarea name="description"  class="form-control"
+        required>{{prev_desc}}</textarea>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Pantry Image</label>
+      <input name="image" type="file" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-success">Update Pantry</button>
+  </form>
+
+
+</div>
+
+{% endblock %}

@@ -21,4 +21,4 @@ The **Pantry Tracker** is a web application designed to help users manage their 
 ### Watch Live
 
    ```bash
-   git clone https://github.com/username/pantry-tracker.git
+   https://pantry-tracker-hai.vercel.app/

@@ -1,88 +1,159 @@
 {% extends "base.html" %}
 {% block start %}
- 
- 
- 
+
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <style>
-  .text{
-    color: green;
+    body {
+        background-color: #e9eaf0;
+    }
+  .text {
+    color: #FF9900;
     font-weight: bold;
   }
+
+  .container {
+    margin-top: 30px;
+    font-family: Arial, sans-serif;
+  }
+
+  .card {
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+  }
+
+  .form-group label {
+    font-weight: bold;
+  }
+
+  .form-control {
+    border: 1px solid #e0e0e0;
+  }
+
+  .btn-success {
+    background-color: #FF9900;
+    border-color: #FF9900;
+  }
+
+  .btn-primary {
+    background-color: #146EB4;
+    border-color: #146EB4;
+  }
+
+  .btn-danger {
+    background-color: #D9534F;
+    border-color: #D9534F;
+  }
+
+  .btn-success:hover,
+  .btn-primary:hover,
+  .btn-danger:hover {
+    opacity: 0.8;
+  }
+
+  table {
+    width: 100%;
+    margin-top: 30px;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+  }
+
+  th,
+  td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+  }
+
+  th {
+    background-color: #232F3E;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f7f7f7;
+  }
+
+  tr:nth-child(odd) {
+    background-color: #FFFFFF;
+  }
+
+  tr:hover {
+    background-color: #e6f7ff;
+  }
 </style>
- 
-<div class="container mt-5">
-    
-    <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <h2 class="text  text-center"> Inventory Management System </h2>
-        <br>
-        <h3>Add Pantry</h3>
-        <hr>
+
+<div class="container">
+  <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2 class="text text-center">Pantry Tracker</h2>
+    <br>
+    <h4>Add Pantry</h4>
+    <hr>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Pantry name</label>
+      <input name="name" type="text" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Pantry Count</label>
+      <input name="count" type="text" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Pantry description</label>
+      <textarea name="description" class="form-control" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Pantry Image</label>
+      <input name="image" type="file" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-success">Add Pantry</button>
+  </form>
+
+  <hr>
+  <div class="class mt-5">
+    <form action="">
+      <div class="max-auto col-6">
         <div class="form-group">
-          <label for="exampleInputEmail1">Pantry name</label>
-          <input name="name" type="text" class="form-control"  required>
-         </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Pantry Count</label>
-          <input name="count" type="text" class="form-control"  required>
-         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1"  >Pantry description</label>
-          <textarea name="description" class="form-control" required ></textarea>
+          <label for="exampleInputEmail1">Search Pantry</label>
+          <input name="search" type="text" class="form-control">
         </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Pantry Image</label>
-            <input name="image" type="file" class="form-control" >
-          </div>
-       
-        <button type="submit" class="btn btn-success">Add Pantry</button>
-      </form>
- 
-      <hr>
-      <div class="class mt-5">
-        <form action="">
- 
-          <div class="max-auto col-6">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Search Pantry</label>
-              <input name="search" type="text" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-primary "> Search</button>
-          </div>
-          </form>
-        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
       </div>
-      <table class="table mt-5">
-        <thead>
- 
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Pantry name</th>
-            <th scope="col">Pantry Count</th>
-            <th scope="col">Pantry Description</th>
-            <th scope="col">Image</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-            {% for query in queryset %}
-          <tr>
-            <th scope="row">{{forloop.counter}}</th>
-            <td>{{query.inventory_name}}</td>
-            <td>{{query.inventory_count}}</td>
-            <td>{{query.inventory_description}}</td>
-            <td>
-                <img src="{{ query.inventory_image }}" style="height: 100px;" alt="Image not found">
-                <td>
-                    <a href="/delete_pantry/{{query.id }}" class="btn btn-danger m-2">Delete</a>
-                    <a href="/update_pantry/{{query.id }}" class="btn btn-success">Update</a>
-                </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-       
+    </form>
+  </div>
+
+  <table class="table mt-5">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Pantry name</th>
+        <th scope="col">Pantry Count</th>
+        <th scope="col">Pantry Description</th>
+        <th scope="col">Image</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for query in queryset %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{query.inventory_name}}</td>
+        <td>{{query.inventory_count}}</td>
+        <td>{{query.inventory_description}}</td>
+        <td>
+          <img src="{{ query.inventory_image }}" style="height: 100px;" alt="Image not found">
+        </td>
+        <td>
+          <a href="/delete_pantry/{{query.id }}" class="btn btn-danger m-2">Delete</a>
+          <a href="/update_pantry/{{query.id }}" class="btn btn-success">Update</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
- 
+
 {% endblock %}
